@@ -34,7 +34,4 @@ const Recipes = props => {
 
 export default Recipes;
 
-{/* <div key={recipe.idMeal}>
-              <img src={recipe.strMealThumb} alt={recipe.strMeal} />
-              <p>{recipe.strMeal}</p>
-            </div> */}
+

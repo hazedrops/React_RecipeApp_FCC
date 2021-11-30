@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from './components/Home';
+import Recipe from './components/Recipe';
+
 import './App.css';
-import Form from './components/Form';
-import Recipes from './components/Recipes';
 
 // https://www.themealdb.com/api/json/v1/1/search.php?s=egg
 
@@ -25,13 +27,19 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Recipe Search</h1>
-        </header>
-        <Form getRecipe={this.getRecipe} />
-        <Recipes recipes={this.state.recipes} />
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route exact path="/"
+             render={ routeProps => 
+              (<Home {...routeProps} getRecipe={this.getRecipe} pieceOfState={this.state.recipes} />) 
+            }/> 
+          <Route path="/recipe" 
+            render={ routeProps => 
+              (<Recipe {...routeProps} getRecipe={this.getRecipe} pieceOfState={this.state.recipes} />) 
+            }/>  
+          {/* <Route path="/recipe" element={<Recipe />} />             */}
+        </Routes>
+      </BrowserRouter>
     );
   }
 }
