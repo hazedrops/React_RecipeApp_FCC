@@ -1,13 +1,26 @@
 import React, { Component } from 'react';
 import './App.css';
 import Form from './components/Form';
+import Recipes from './components/Recipes';
+
+// https://www.themealdb.com/api/json/v1/1/search.php?s=egg
 
 class App extends Component {
-  getRecipe = (e) => {
+  state = {
+    recipes: []
+  }
+
+  getRecipe = async (e) => {
     const recipeName = e.target.elements.recipeName.value
     e.preventDefault();
 
-    console.log(recipeName);
+    const api_call = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${recipeName}`);
+
+    const data = await api_call.json();
+    this.setState({ recipes: data.meals });
+    
+    console.log(this.state.recipes);
+
   }
 
   render() {
@@ -17,6 +30,7 @@ class App extends Component {
           <h1 className="App-title">Recipe Search</h1>
         </header>
         <Form getRecipe={this.getRecipe} />
+        <Recipes recipes={this.state.recipes} />
       </div>
     );
   }
